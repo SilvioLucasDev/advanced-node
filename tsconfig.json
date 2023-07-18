@@ -16,5 +16,5 @@
     },
     "strict": true                            // HABILITA VÁRIAS OUTRAS PROPRIEDADES AO MESMO TEMPO (SUPER RECOMENDADO HABILITAR)
   },
-  "include": ["src"]                          // INCLUI TODOS OS ARQUIVOS DA PASTA SRC DENTRO DA DIST (BUILD)
+  "include": ["src", "tests"]                          // INCLUI TODOS OS ARQUIVOS DA PASTA SRC DENTRO DA DIST (BUILD)
 }
