@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",                         // DEFINE AONDE FICARA O BUILD
+    "rootDir": "src",                         // DEFINE O DIRETÓRIO RAIZ
+    "target": "es2021",                       // DEFINE EM CIMA DE QUAL VERSÃO DO JAVASCRIPT O BUILD SERÁ FEITO
+    "sourceMap": true,                        // UTILIZADO PARA DEBUG (BREAKPOINT)
+    "skipLibCheck": true,                     // PERFORMANCE
+    "forceConsistentCasingInFileNames": true, // FORÇA UMA PADRONIZAÇÃO NOS PATH DE IMPORTAÇÃO
+    "module": "CommonJS",                     // HABILITA O REQUIRE E ETC
+    "moduleResolution": "Node",               // HABILITA A IMPORTAÇÃO DE UMA PASTA QUE TEM VÁRIOS EXPORT * FROM './'
+    "esModuleInterop": true,                  // PADRONIZA AS LIBIS EXEMPLO: UMAS USA REQUIRE E OUTRA IMPORT
+    "baseUrl": "src",                         // DEFINE A PASTA RAIZ UTILIZADA PELO PATH "@"
+    "paths": {
+      "@/*": ["*"],
+      "@/tests/*": ["../tests/*"]
+    },
+    "strict": true                            // HABILITA VÁRIAS OUTRAS PROPRIEDADES AO MESMO TEMPO (SUPER RECOMENDADO HABILITAR)
+  },
+  "include": ["src"]                          // INCLUI TODOS OS ARQUIVOS DA PASTA SRC DENTRO DA DIST (BUILD)
+}
