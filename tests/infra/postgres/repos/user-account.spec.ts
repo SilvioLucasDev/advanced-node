@@ -46,12 +46,36 @@ describe('PgUserAccountRepository', () => {
       await sut.saveWithFacebook({
         name: 'any_name',
         email: 'any_email',
-        facebookId: '1'
+        facebookId: 'any_fb_id'
       })
 
       const pgUser = await pgUserRepo.findOne({ email: 'any_email' })
 
       expect(pgUser?.id).toBe(1)
+    })
+
+    it('should update account if id is defined', async () => {
+      await pgUserRepo.save({
+        name: 'any_name',
+        email: 'any_email',
+        facebookId: 'any_fb_id'
+      })
+
+      await sut.saveWithFacebook({
+        id: '1',
+        name: 'new_name',
+        email: 'new_email',
+        facebookId: 'new_fb_id'
+      })
+
+      const pgUser = await pgUserRepo.findOne({ id: 1 })
+
+      expect(pgUser).toEqual({
+        id: 1,
+        name: 'new_name',
+        email: 'any_email',
+        facebookId: 'new_fb_id'
+      })
     })
   })
 })
