@@ -14,7 +14,9 @@
       "@/*": ["*"],
       "@/tests/*": ["../tests/*"]
     },
-    "strict": true                            // HABILITA VÁRIAS OUTRAS PROPRIEDADES AO MESMO TEMPO (SUPER RECOMENDADO HABILITAR)
+    "strict": true,                           // HABILITA VÁRIAS OUTRAS PROPRIEDADES AO MESMO TEMPO (SUPER RECOMENDADO HABILITAR)
+    "emitDecoratorMetadata": true,            //UTILIZADO PELO TYPEORM
+    "experimentalDecorators": true,           //UTILIZADO PELO TYPEORM
   },
   "include": ["src", "tests"]                          // INCLUI TODOS OS ARQUIVOS DA PASTA SRC DENTRO DA DIST (BUILD)
 }
