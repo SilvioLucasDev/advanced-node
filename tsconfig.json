@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "dist",                         // DEFINE AONDE FICARA O BUILD
-    "rootDir": "src",                         // DEFINE O DIRETÓRIO RAIZ
+    "rootDirs": ["src", "tests"],             // DEFINE O DIRETÓRIO RAIZ
     "target": "es2021",                       // DEFINE EM CIMA DE QUAL VERSÃO DO JAVASCRIPT O BUILD SERÁ FEITO
     "sourceMap": true,                        // UTILIZADO PARA DEBUG (BREAKPOINT)
     "skipLibCheck": true,                     // PERFORMANCE
@@ -18,5 +18,5 @@
     "emitDecoratorMetadata": true,            //UTILIZADO PELO TYPEORM
     "experimentalDecorators": true,           //UTILIZADO PELO TYPEORM
   },
-  "include": ["src", "tests"]                          // INCLUI TODOS OS ARQUIVOS DA PASTA SRC DENTRO DA DIST (BUILD)
+  "include": ["src", "tests"]                 // INCLUI TODOS OS ARQUIVOS DA PASTA SRC DENTRO DA DIST (BUILD)
 }
