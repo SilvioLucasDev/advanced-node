@@ -6,8 +6,8 @@ import { getRepository } from 'typeorm'
 export class PgUserAccountRepository implements LoadUserAccountRepository, SaveFacebookAccountRepository {
   private readonly pgUserRepo = getRepository(PgUser)
 
-  async load (params: LoadUserAccountRepository.Params): Promise<LoadUserAccountRepository.Result> {
-    const pgUser = await this.pgUserRepo.findOne({ email: params.email })
+  async load ({ email }: LoadUserAccountRepository.Params): Promise<LoadUserAccountRepository.Result> {
+    const pgUser = await this.pgUserRepo.findOne({ email })
 
     if (pgUser !== undefined) {
       return {
@@ -17,9 +17,7 @@ export class PgUserAccountRepository implements LoadUserAccountRepository, SaveF
     }
   }
 
-  async saveWithFacebook (params: SaveFacebookAccountRepository.Params): Promise<SaveFacebookAccountRepository.Result> {
-    const { id, name, email, facebookId } = params
-
+  async saveWithFacebook ({ id, name, email, facebookId }: SaveFacebookAccountRepository.Params): Promise<SaveFacebookAccountRepository.Result> {
     if (id === undefined) {
       const pgUser = await this.pgUserRepo.save({ name, email, facebookId })
       return { id: pgUser.id.toString() }
