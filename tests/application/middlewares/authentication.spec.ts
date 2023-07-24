@@ -1,4 +1,4 @@
-import { forbiddenError, type HttpResponse } from '@/application/helpers'
+import { forbidden, type HttpResponse } from '@/application/helpers'
 import { ForbiddenError } from '@/application/errors'
 import { RequiredStringValidator } from '@/application/validation'
 import { type Authorize } from '@/domain/use-cases'
@@ -9,8 +9,12 @@ class AuthenticationMiddleware {
   constructor (private readonly authorize: Authorize) {}
   async handle ({ authorization }: HttpRequest): Promise<HttpResponse<Error> | undefined> {
     const error = new RequiredStringValidator(authorization, 'authorization').validate()
-    if (error !== undefined) return forbiddenError()
-    await this.authorize({ token: authorization })
+    if (error !== undefined) return forbidden()
+    try {
+      await this.authorize({ token: authorization })
+    } catch {
+      return forbidden()
+    }
   }
 }
 
@@ -60,5 +64,16 @@ describe('AuthenticationMiddleware', () => {
 
     expect(authorize).toHaveBeenCalledWith({ token: authorization })
     expect(authorize).toHaveBeenCalledTimes(1)
+  })
+
+  it('should return 403 if authorize throws', async () => {
+    authorize.mockRejectedValueOnce(new Error('any_error'))
+
+    const httpResponse = await sut.handle({ authorization })
+
+    expect(httpResponse).toEqual({
+      statusCode: 403,
+      data: new ForbiddenError()
+    })
   })
 })
