@@ -12,6 +12,13 @@ export class UnauthorizedError extends Error {
   }
 }
 
+export class ForbiddenError extends Error {
+  constructor () {
+    super('Access denied')
+    this.name = 'ForbiddenError'
+  }
+}
+
 export class ServerError extends Error {
   constructor (error?: Error | undefined) {
     super('Server failed. Try again soon')
