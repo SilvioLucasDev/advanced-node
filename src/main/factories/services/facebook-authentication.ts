@@ -1,6 +1,6 @@
 import { makeFacebookApi } from '@/main/factories/apis'
 import { makePgUserAccountRepo } from '@/main/factories/repos'
-import { FacebookAuthenticationService } from '@/data/services'
+import { FacebookAuthenticationService } from '@/domain/services'
 
 import { makeJwtTokenGenerator } from '../crypto'
 
