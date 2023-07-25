@@ -7,7 +7,6 @@ type Setup = (facebook: LoadFacebookUser, userAccountRepo: LoadUserAccount & Sav
 
 type Input = { token: string }
 type Output = { accessToken: string }
-
 export type FacebookAuthentication = (params: Input) => Promise<Output>
 
 export const setupFacebookAuthentication: Setup = (facebook, userAccountRepo, token) => {
