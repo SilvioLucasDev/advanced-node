@@ -1,3 +1,5 @@
+import { UniqueId } from '@/infra/crypto'
+
 describe('UniqueId', () => {
   it('should return correct uuid', () => {
     const sut = new UniqueId(new Date(2023, 9, 3, 10, 10, 10))
