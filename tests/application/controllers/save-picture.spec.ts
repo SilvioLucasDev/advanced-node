@@ -30,7 +30,7 @@ describe('SavePictureController', () => {
     const validators = sut.buildValidators({ file, userId })
 
     expect(validators).toEqual([
-      new Required(file, 'token'),
+      new Required(file, 'file'),
       new RequiredBuffer(buffer, 'file'),
       new AllowedMimeTypes(['png', 'jpg'], mimeType),
       new MaxFileSize(5, buffer)
