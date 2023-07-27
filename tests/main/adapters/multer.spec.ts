@@ -1,5 +1,5 @@
 import { getMockReq, getMockRes } from '@jest-mock/express'
-import { type RequestHandler } from 'express'
+import { type Request, type Response, type RequestHandler, type NextFunction } from 'express'
 import multer from 'multer'
 
 jest.mock('multer')
@@ -10,18 +10,31 @@ const adaptMulter: RequestHandler = (req, res, next) => {
 }
 
 describe('MulterAdapter', () => {
-  it('should call single upload with correct input', () => {
-    const fakeMulter = multer as jest.Mocked<typeof multer>
-    const uploadSpy = jest.fn()
-    const singleSpy = jest.fn().mockImplementation(() => uploadSpy)
-    const multerSpy = jest.fn().mockImplementation(() => ({ single: singleSpy }))
+  let fakeMulter: jest.Mocked<typeof multer>
+  let uploadSpy: jest.Mock
+  let singleSpy: jest.Mock
+  let multerSpy: jest.Mock
+  let req: Request
+  let res: Response
+  let next: NextFunction
+  let sut: RequestHandler
+
+  beforeAll(() => {
+    fakeMulter = multer as jest.Mocked<typeof multer>
+    uploadSpy = jest.fn()
+    singleSpy = jest.fn().mockImplementation(() => uploadSpy)
+    multerSpy = jest.fn().mockImplementation(() => ({ single: singleSpy }))
     jest.mocked(fakeMulter).mockImplementationOnce(multerSpy)
-    const req = getMockReq()
-    const res = getMockRes().res
-    const next = getMockRes().next
+    req = getMockReq()
+    res = getMockRes().res
+    next = getMockRes().next
+  })
 
-    const sut = adaptMulter
+  beforeEach(() => {
+    sut = adaptMulter
+  })
 
+  it('should call single upload with correct input', () => {
     sut(req, res, next)
 
     expect(multerSpy).toHaveBeenCalledWith()
