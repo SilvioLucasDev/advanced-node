@@ -17,23 +17,22 @@ export class AwsS3FileStorage implements UploadFile, DeleteFile {
     this.s3Client = new S3Client(awsConfig)
   }
 
-  async upload ({ key, file }: UploadFile.Input): Promise<UploadFile.Output> {
+  async upload ({ fileName, file }: UploadFile.Input): Promise<UploadFile.Output> {
     const putObjectCommand = new PutObjectCommand({
       Bucket: this.bucket,
-      Key: key,
+      Key: fileName,
       Body: file
     })
     await this.s3Client.send(putObjectCommand)
 
-    return `https://${this.bucket}.s3.amazonaws.com/${encodeURIComponent(key)}`
+    return `https://${this.bucket}.s3.amazonaws.com/${encodeURIComponent(fileName)}`
   }
 
-  async delete ({ key }: DeleteFile.Input): Promise<void> {
+  async delete ({ fileName }: DeleteFile.Input): Promise<void> {
     const deleteObjectCommand = new DeleteObjectCommand({
       Bucket: this.bucket,
-      Key: key
+      Key: fileName
     })
-
     await this.s3Client.send(deleteObjectCommand)
   }
 }

@@ -9,7 +9,7 @@ describe('AwsS3FileStorage', () => {
   let secret: string
   let bucket: string
   let region: string
-  let key: string
+  let fileName: string
   let sut: AwsS3FileStorage
 
   beforeAll(() => {
@@ -17,7 +17,7 @@ describe('AwsS3FileStorage', () => {
     secret = 'any_secret'
     bucket = 'any_bucket'
     region = 'any_region'
-    key = 'any_key'
+    fileName = 'any_file_name'
   })
 
   beforeEach(() => {
@@ -44,36 +44,36 @@ describe('AwsS3FileStorage', () => {
     })
 
     it('should call PutObjectCommand with correct input', async () => {
-      await sut.upload({ key, file })
+      await sut.upload({ fileName, file })
 
       expect(PutObjectCommand).toHaveBeenCalledWith({
         Bucket: bucket,
-        Key: key,
+        Key: fileName,
         Body: file
       })
       expect(PutObjectCommand).toHaveBeenCalledTimes(1)
     })
 
     it('should return imageUrl', async () => {
-      const imageUrl = await sut.upload({ key, file })
+      const imageUrl = await sut.upload({ fileName, file })
 
-      expect(imageUrl).toBe(`https://${bucket}.s3.amazonaws.com/${key}`)
+      expect(imageUrl).toBe(`https://${bucket}.s3.amazonaws.com/${fileName}`)
     })
 
     it('should return encoded imageUrl', async () => {
-      const imageUrl = await sut.upload({ key: 'any key', file })
+      const imageUrl = await sut.upload({ fileName: 'any file name', file })
 
-      expect(imageUrl).toBe(`https://${bucket}.s3.amazonaws.com/any%20key`)
+      expect(imageUrl).toBe(`https://${bucket}.s3.amazonaws.com/any%20file%20name`)
     })
   })
 
   describe('delete', () => {
     it('should call DeleteObjectCommand with correct input', async () => {
-      await sut.delete({ key })
+      await sut.delete({ fileName })
 
       expect(DeleteObjectCommand).toHaveBeenCalledWith({
         Bucket: bucket,
-        Key: key
+        Key: fileName
       })
       expect(DeleteObjectCommand).toHaveBeenCalledTimes(1)
     })
