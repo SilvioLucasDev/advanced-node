@@ -4,8 +4,8 @@ import { UserProfile } from '@/domain/entities'
 
 type Setup = (fileStorage: UploadFile & DeleteFile, crypto: UUIDGenerator, userProfileRepo: SaveUserPicture & LoadUserProfile) => ChangeProfilePicture
 
-type Input = { id: string, file?: { buffer: Buffer, mimeType: string } }
 type Output = { pictureUrl?: string, initials?: string }
+type Input = { id: string, file?: { buffer: Buffer, mimeType: string } }
 export type ChangeProfilePicture = (input: Input) => Promise<Output>
 
 export const setupChangeProfilePicture: Setup = (fileStorage, crypto, userProfileRepo) =>

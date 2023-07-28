@@ -3,12 +3,8 @@ import { unauthorized, type HttpResponse, ok } from '@/application/helpers'
 import { ValidationBuilder as Builder, type Validator } from '@/application/validation'
 import { type FacebookAuthentication } from '@/domain/use-cases'
 
-type HttpRequest = {
-  token: string
-}
-type Model = Error | {
-  accessToken: string
-}
+type HttpRequest = { token: string }
+type Model = Error | { accessToken: string }
 
 export class FacebookLoginController extends Controller {
   constructor (private readonly facebookAuthentication: FacebookAuthentication) {
