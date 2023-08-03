@@ -1,3 +1,4 @@
+[![Coverage Status](https://coveralls.io/repos/github/SilvioLucasDev/advanced-node/badge.svg?branch=main)](https://coveralls.io/github/SilvioLucasDev/advanced-node?branch=main)
 # advanced-node
 API Node.js com integração com S3 da AWS e autenticação via Facebook. Ela utiliza banco de dados relacional Postgres e TypeORM como ORM. API desenvolvida seguindo a metodologia TDD e aplicando Clean Architecture, princípios SOLID e Design Patterns para resolver problemas comuns.
 <br><br>
