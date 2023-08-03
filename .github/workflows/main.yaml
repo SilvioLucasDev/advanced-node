@@ -1,37 +1,35 @@
-name: CI/CD Pipeline
+name: NodeJs CI/CD
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  build:
+  test:
+    name: Test
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
 
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    services:
-      postgres:
-        image: postgres:latest
-        ports:
-          - 5432:5432
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: Set Up Node.js
-        uses: actions/setup-node@v2
+      - name: Use Node.JS ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
         with:
-          node-version: '20.4'
-
-      - name: Install Dependencies
-        run: npm install
+           node-version: ${{ matrix.node-version }}
 
       - name: 'Create env file'
         run: echo "${{ secrets.ENV_FILE }}" > .env
+
+      - name: Install Dependencies
+        run: npm install
 
       - name: Build
         run: npm run build
@@ -45,10 +43,14 @@ jobs:
       - name: Run Coveralls
         uses: coverallsapp/github-action@v2
 
-      - name: Deploy to Staging
-        run: echo "Implantação no ambiente de pré-produção"
+  deploy:
+    name: Deploy
+    needs: [test]
+    runs-on: ubuntu-latest
 
-      - name: Deploy to Production
-        if: github.ref == 'refs/heads/main'
-        run: echo "Implantação no ambiente de produção"
-
+    steps:
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
