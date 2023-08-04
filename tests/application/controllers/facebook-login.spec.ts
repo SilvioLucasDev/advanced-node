@@ -1,7 +1,7 @@
 import { Controller, FacebookLoginController } from '@/application/controllers'
 import { ServerError, UnauthorizedError } from '@/application/errors'
 import { RequiredString } from '@/application/validation'
-import { AuthenticationError } from '@/domain/entities/errors'
+import { AuthenticationError } from '@/domain/errors'
 
 describe('FacebookLoginController', () => {
   let sut: FacebookLoginController

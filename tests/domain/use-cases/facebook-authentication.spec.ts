@@ -1,7 +1,7 @@
 import { setupFacebookAuthentication, type FacebookAuthentication } from '@/domain/use-cases'
 import { type LoadFacebookUser, type TokenGenerator } from '@/domain/contracts/gateways'
 import { type LoadUserAccount, type SaveFacebookAccount } from '@/domain/contracts/repos'
-import { AuthenticationError } from '@/domain/entities/errors'
+import { AuthenticationError } from '@/domain/errors'
 import { AccessToken, FacebookAccount } from '@/domain/entities'
 
 import { mock, type MockProxy } from 'jest-mock-extended'
